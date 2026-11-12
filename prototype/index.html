@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundit - Lost & Found Portal</title>
+    <!-- Icon library for the header icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- External stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =================================== -->
+    <!--          LOGIN PAGE (Default)       -->
+    <!-- =================================== -->
+    <div id="login-page">
+        <div class="login-container">
+            <div class="login-logo">
+                <h1>Found🔎t </h1>
+            </div>
+            <h2>University Lost & Found Portal</h2>
+            <p>Please log in using your official university account.</p>
+
+            <!-- --- 1. Email and Password Form --- -->
+            <form id="email-login-form">
+                <div class="input-group">
+                    <label for="email-input">University Email</label>
+                    <input type="email" id="email-input" placeholder="e.g., student.name@g.bracu.ac.bd" required>
+                </div>
+                <div class="input-group">
+                    <label for="password-input">Password</label>
+                    <input type="password" id="password-input" placeholder="********" required>
+                </div>
+                <!-- Submit button uses the standard .submit-btn style -->
+                <button type="submit" class="submit-btn" style="width: 100%; margin-bottom: 1.5rem;">Log In</button>
+                <p class="divider-text">OR</p>
+            </form>
+
+            <!-- --- 2. G-Suite Sign-in (Main Method) --- -->
+            <button id="gsuite-login-btn" class="g-suite-btn">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 48 48">
+                    <path fill="#EA4335"
+                        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
+                    </path>
+                    <path fill="#4285F4"
+                        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
+                    </path>
+                    <path fill="#FBBC05"
+                        d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
+                    </path>
+                    <path fill="#34A853"
+                        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
+                    </path>
+                    <path fill="none" d="M0 0h48v48H0z"></path>
+                </svg>
+                Sign in with G-Suite
+            </button>
+        </div>
+    </div>
+
+    <!-- =================================== -->
+    <!--        MAIN APP PAGE (Hidden)       -->
+    <!-- =================================== -->
+    <div id="main-app-page">
+        <!-- ===== HEADER / NAVBAR ===== -->
+        <header>
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <a href="#">Foundit</a>
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="nav-btn post-lost">Report Lost Item</a>
+                    <a href="#" class="nav-btn post-found">Register Found Item</a>
+                </div>
+                <div class="nav-user">
+                    <div id="user-info"
+                        style="font-size:0.9rem; color:#555; margin-right:12px; display:flex; flex-direction:column; align-items:flex-end;">
+                        <!-- Filled by script: logged-in email / role -->
+                    </div>
+                    <a href="#" class="nav-icon" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </a>
+                    <a href="#" class="nav-icon" title="My Profile">
+                        <i class="fas fa-user-circle"></i>
+                    </a>
+                    <a href="#" id="logout-btn" class="nav-icon" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </div>
+            </nav>
+        </header>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main>
+            <!-- --- Search and Filter Bar --- -->
+            <section class="search-container">
+                <input type="search" id="search-bar"
+                    placeholder="Search for items (e.g., 'black wallet', 'laptop charger')">
+                <select id="filter-category">
+                    <option value="all">All Categories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="books">Books</option>
+                    <option value="id-cards">ID Cards</option>
+                    <option value="accessories">Accessories</option>
+                    <option value="clothes">Clothes</option>
+                    <option value="other">Other</option>
+                </select>
+                <select id="filter-type">
+                    <option value="all">All Types</option>
+                    <option value="lost">Lost Items</option>
+                    <option value="found">Found Items</option>
+                </select>
+                <button id="search-btn"><i class="fas fa-search"></i> Search</button>
+            </section>
+
+            <!-- --- "Today's Items" Feed --- -->
+            <section class="feed-section">
+                <h3>Today's Items Feed (Last 24 Hours)</h3>
+                <div class="quick-feed" id="quick-feed-container">
+                    <p>Loading recent items...</p>
+                </div>
+            </section>
+
+            <!-- --- Main Item Feed --- -->
+            <section class="feed-section">
+                <h3>All Items</h3>
+                <div class="item-feed" id="item-feed-container">
+                    <!-- Items injected here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- ===== FOOTER ===== -->
+        <footer>
+            <p>&copy; 2026 Foundit - Prantik. All rights reserved.</p>
+            <p class="footer-names">
+                Designed & Built by:
+                <strong>Prantik</strong>,
+                <strong></strong>
+                <strong></strong>
+            </p>
+            <p>Contact us: <a href="mailto:support@foundit.com">support@foundit.com</a></p>
+        </footer>
+
+        <!-- 
+        ===== MODALS (Hidden by default) ===== 
+        -->
+
+        <!-- --- Post Item Modal (for both Lost & Found) --- -->
+        <div id="post-item-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" data-modal-id="post-item-modal">&times;</span>
+                <h3 id="modal-title">Report an Item</h3>
+                <form id="post-item-form">
+                    <input type="hidden" id="form-type" value="lost">
+
+                    <label for="item-title">Title</label>
+                    <input type="text" id="item-title" placeholder="e.g., 'Lost Black Wallet'" required>
+
+                    <label for="item-category">Category</label>
+                    <select id="item-category" required>
+                        <option value="">Select a category...</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="books">Books</option>
+                        <option value="id-cards">ID Cards</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="clothes">Clothes</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <label for="item-location">Location</label>
+                    <input type="text" id="item-location" placeholder="e.g., 'UB2 Cafeteria'" required>
+
+                    <label for="item-description">Description</label>
+                    <textarea id="item-description" rows="3"
+                        placeholder="Describe the item, color, brand, etc."></textarea>
+
+                    <label for="item-hidden-detail">Hidden Verification Detail (Mandatory)</label>
+                    <input type="text" id="item-hidden-detail"
+                        placeholder="e.g., 'Scratch on the back', 'Last 3 digits of ID'" required>
+                    <small>This detail will NOT be public. Only you and the admin can see it. It's used to verify the
+                        owner.</small>
+
+                    <label for="item-image">Upload Image</label>
+                    <input type="file" id="item-image" accept="image/*">
+                    <small>Note: Image upload is a simulation. It will not be saved.</small>
+
+                    <button type="submit" class="submit-btn">Submit Report</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- --- Claim Item Modal --- -->
+        <div id="claim-item-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" data-modal-id="claim-item-modal">&times;</span>
+                <h3>Claim Item</h3>
+                <form id="claim-item-form">
+                    <p>To prove ownership of <strong id="claim-item-name"></strong>, please provide the hidden
+                        verification detail you set (or that you know).</p>
+
+                    <label for="claim-verification">Verification Detail</label>
+                    <input type="text" id="claim-verification"
+                        placeholder="e.g., 'It has a small scratch on the corner'" required>
+
+                    <input type="hidden" id="claim-item-id">
+                    <button type="submit" class="submit-btn">Submit Claim</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- --- Custom Alert Modal (Replaces alert()) --- -->
+        <div id="custom-alert-modal" class="modal">
+            <div class="modal-content" style="max-width: 400px; text-align: center;">
+                <span class="close-btn" data-modal-id="custom-alert-modal" id="alert-close-x">&times;</span>
+                <h3 id="custom-alert-title">Notice</h3>
+                <p id="custom-alert-message" style="margin: 1.5rem 0; font-size: 1.1rem;"></p>
+                <button id="custom-alert-ok" class="submit-btn"
+                    style="width: 100px; margin: 0 auto; display: block;">OK</button>
+            </div>
+        </div>
+
+    </div> <!-- End of #main-app-page -->
+
+
+    <!-- External script -->
+    <script src="script.js"></script>
+</body>
+
+</html>
