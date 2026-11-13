@@ -11,7 +11,6 @@
         <div class="cat-header">
             <div>
                 <h1>Edit Category</h1>
-                <p>Update the name or description. The name must stay unique.</p>
             </div>
         </div>
 
