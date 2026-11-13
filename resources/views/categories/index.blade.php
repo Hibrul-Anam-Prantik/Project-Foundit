@@ -11,7 +11,6 @@
         <div class="cat-header">
             <div>
                 <h1>Item Categories</h1>
-                <p>Group lost and found items (e.g. Electronics, ID Cards) so they are easier to browse.</p>
             </div>
             <a href="{{ route('categories.create') }}" class="btn btn-primary">
                 <i class="fa-solid fa-plus"></i> New Category
