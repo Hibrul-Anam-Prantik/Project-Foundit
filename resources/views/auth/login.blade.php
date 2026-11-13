@@ -14,8 +14,14 @@
             <h2>University Lost & Found Portal</h2>
             <p>Please log in using your official university account.</p>
 
+            @if ($errors->any())
+                <div style="background:#fee2e2; color:#991b1b; border:1px solid #fecaca; border-radius:6px; padding:0.75rem 1rem; margin-bottom:1rem; text-align:left; font-size:0.9rem;">
+                    {{ $errors->first() }}
+                </div>
+            @endif
+
             <!-- --- 1. Email and Password Form --- -->
-            <form id="email-login-form" method="POST" action="{{ route('login') }}">
+            <form id="email-login-form" method="POST" action="{{ route('login.submit') }}">
                 @csrf
                 <div class="input-group">
                     <label for="email-input">University Email</label>
